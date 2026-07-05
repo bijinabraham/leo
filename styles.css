@@ -519,3 +519,66 @@ html, body {
   background: rgba(240,196,124,0.25);
   outline: none;
 }
+
+/* ========== RAW DIARY MODAL ========== */
+
+.diary-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 10, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  overflow-y: auto;
+}
+.diary-modal[hidden] { display: none; }
+.diary-content {
+  background: var(--paper);
+  color: var(--ink);
+  max-width: 640px;
+  width: 100%;
+  padding: 3rem 2.5rem;
+  border-radius: 6px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.diary-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: rgba(20, 16, 10, 0.8);
+  color: var(--paper-on-dark);
+  border: 1px solid rgba(240,196,124,0.25);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.diary-close:hover, .diary-close:focus {
+  background: rgba(240,196,124,0.25);
+  outline: none;
+}
+.diary-intro {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-mid);
+  margin: 1rem 0 2rem;
+  text-align: center;
+}
+.diary-text p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink);
+}

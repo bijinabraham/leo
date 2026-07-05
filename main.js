@@ -156,3 +156,32 @@ function initLightbox() {
 }
 
 initLightbox();
+
+// -------- Raw diary modal --------
+function initDiaryModal() {
+  const toggle = document.getElementById('raw-toggle');
+  const modal = document.getElementById('diary-modal');
+  const closeBtn = document.getElementById('diary-close');
+  if (!toggle || !modal || !closeBtn) return;
+
+  let lastFocused = null;
+
+  function open() {
+    lastFocused = document.activeElement;
+    modal.hidden = false;
+    closeBtn.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  toggle.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', (e) => { if (!modal.hidden && e.key === 'Escape') close(); });
+}
+
+initDiaryModal();
