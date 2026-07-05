@@ -1,0 +1,62 @@
+// ==============================================================
+// Leo memorial — main.js
+// Handles: nav scroll swap, gallery population, lightbox,
+// raw-diary modal, and falling petals.
+// ==============================================================
+
+// -------- Gallery: chronological list of all photos --------
+// Filenames sort chronologically because they start with YYYYMMDD.
+// (Non-dated names like IMG-YYYYMMDD-... and UUIDs sort where they fall in ASCII order.)
+const GALLERY_PHOTOS = [
+  '20230219_154709.jpg',
+  '20230219_154710.jpg',
+  '20230219_154730.jpg',
+  '20230219_154735.jpg',
+  '20230219_154737.jpg',
+  '20230301_080926.jpg',
+  '20230320_165557.jpg',
+  '20230320_170341.jpg',
+  '20230330_214141.jpg',
+  '20230620_164839.jpg',
+  '20230620_164843.jpg',
+  '20230620_164902.jpg',
+  '20230620_164905.jpg',
+  '20230620_164933.jpg',
+  '20230620_164948.jpg',
+  '20230626_204700.jpg',
+  '20230829_163105.jpg',
+  '20231015_074933.jpg',
+  '20231015_074939_2.jpg',
+  '20231015_075300.jpg',
+  '20231015_075303.jpg',
+  '20231016_113108.jpg',
+  '20231209_195112.jpg',
+  'fac05352-b80c-49f1-809a-8a84791b41cd.jpg',
+  'IMG_20260114_195639.jpg',
+  'IMG-20231209-WA0007.jpg',
+  'IMG-20250123-WA0007.jpg',
+  'IMG-20251005-WA0003.jpg',
+  'IMG-20251005-WA0005.jpg',
+  'IMG-20251005-WA0006.jpg',
+  'IMG-20251005-WA0008.jpg'
+];
+
+function populateGallery() {
+  const grid = document.getElementById('gallery');
+  if (!grid) return;
+  const frag = document.createDocumentFragment();
+  GALLERY_PHOTOS.forEach((filename, i) => {
+    const base = filename.replace(/\.(jpg|jpeg)$/i, '');
+    const img = document.createElement('img');
+    img.src = `photos/${base}-sm.jpg`;
+    img.srcset = `photos/${base}-sm.jpg 700w, photos/${base}.jpg 1400w`;
+    img.sizes = '(max-width: 540px) 90vw, (max-width: 900px) 45vw, 30vw';
+    img.alt = `Leo, photo ${i + 1} of ${GALLERY_PHOTOS.length}`;
+    img.loading = 'lazy';
+    img.dataset.full = `photos/${base}.jpg`;
+    frag.appendChild(img);
+  });
+  grid.appendChild(frag);
+}
+
+populateGallery();
