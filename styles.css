@@ -582,3 +582,56 @@ html, body {
   line-height: 1.7;
   color: var(--ink);
 }
+
+/* ========== MOBILE ========== */
+
+@media (max-width: 640px) {
+  .topnav {
+    padding: 1rem 1.25rem;
+  }
+  .topnav-monogram { font-size: 1.15rem; }
+  .topnav-memoriam { font-size: 0.6rem; letter-spacing: 0.25em; }
+
+  .hero-title {
+    letter-spacing: 0.08em;
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.32em;
+  }
+  .hero-dates {
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    margin-top: 1.5rem;
+  }
+
+  .section-lead {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .story-block {
+    padding: 2rem 1.5rem 3rem;
+  }
+  .story-container p {
+    font-size: 1.05rem;
+    text-indent: 1.25rem;
+  }
+
+  .photo-figure {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+  .photo-figure img { max-height: 65vh; }
+
+  .split-photos {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+  .split-photos img { max-height: 55vh; }
+
+  .pull-band { padding: 4rem 1.5rem; }
+
+  .closing { padding: 4rem 1.5rem 6rem; }
+
+  .diary-content { padding: 2rem 1.5rem; }
+}
