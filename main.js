@@ -85,3 +85,23 @@ function spawnPetals() {
 }
 
 spawnPetals();
+
+// -------- Nav color swap on scroll --------
+function initNavScroll() {
+  const topnav = document.getElementById('topnav');
+  if (!topnav) return;
+  const heroHeight = window.innerHeight;
+  function update() {
+    if (window.scrollY > heroHeight - 100) {
+      topnav.classList.remove('dark-nav');
+      topnav.classList.add('light-nav');
+    } else {
+      topnav.classList.add('dark-nav');
+      topnav.classList.remove('light-nav');
+    }
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+initNavScroll();
