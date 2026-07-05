@@ -105,3 +105,54 @@ function initNavScroll() {
 }
 
 initNavScroll();
+
+// -------- Lightbox for gallery + body photos --------
+function initLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  let lastFocused = null;
+
+  function open(src, alt) {
+    lastFocused = document.activeElement;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.hidden = false;
+    closeBtn.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  // Gallery photos: click + keyboard to open
+  document.querySelectorAll('.gallery-grid img').forEach(img => {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.addEventListener('click', () => open(img.dataset.full || img.src, img.alt));
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img.dataset.full || img.src, img.alt); }
+    });
+  });
+  // Body photo figures: click + keyboard to open
+  document.querySelectorAll('.photo-figure img, .split-photos img').forEach(img => {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.addEventListener('click', () => open(img.src, img.alt));
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img.src, img.alt); }
+    });
+  });
+
+  // Close: X button, click backdrop, Esc key
+  closeBtn.addEventListener('click', close);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener('keydown', (e) => { if (!lightbox.hidden && e.key === 'Escape') close(); });
+}
+
+initLightbox();
