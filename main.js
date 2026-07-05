@@ -114,32 +114,55 @@ function initLightbox() {
   if (!lightbox || !lightboxImg || !closeBtn) return;
 
   let lastFocused = null;
+  let galleryImages = [];   // cached list when opening from gallery
+  let currentIndex = -1;    // -1 means not in gallery-nav mode (body photo)
 
-  function open(src, alt) {
+  function showAt(index) {
+    if (index < 0 || index >= galleryImages.length) return;
+    const img = galleryImages[index];
+    lightboxImg.src = img.dataset.full || img.src;
+    lightboxImg.alt = img.alt || '';
+    currentIndex = index;
+  }
+  function open(src, alt, index) {
     lastFocused = document.activeElement;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
     lightbox.hidden = false;
     closeBtn.focus();
     document.body.style.overflow = 'hidden';
+    if (typeof index === 'number' && index >= 0) {
+      galleryImages = Array.from(document.querySelectorAll('.gallery-grid img'));
+      showAt(index);
+    } else {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      galleryImages = [];
+      currentIndex = -1;
+    }
   }
   function close() {
     lightbox.hidden = true;
     lightboxImg.src = '';
     document.body.style.overflow = '';
+    galleryImages = [];
+    currentIndex = -1;
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
+  function navigate(delta) {
+    if (currentIndex < 0 || galleryImages.length === 0) return;
+    const n = galleryImages.length;
+    showAt((currentIndex + delta + n) % n);
+  }
 
-  // Gallery photos: click + keyboard to open
-  document.querySelectorAll('.gallery-grid img').forEach(img => {
+  // Gallery photos: click + keyboard, tracks index for arrow-key navigation
+  document.querySelectorAll('.gallery-grid img').forEach((img, i) => {
     img.tabIndex = 0;
     img.setAttribute('role', 'button');
-    img.addEventListener('click', () => open(img.dataset.full || img.src, img.alt));
+    img.addEventListener('click', () => open(null, null, i));
     img.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img.dataset.full || img.src, img.alt); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(null, null, i); }
     });
   });
-  // Body photo figures: click + keyboard to open
+  // Body photo figures: click + keyboard (no gallery navigation)
   document.querySelectorAll('.photo-figure img, .split-photos img').forEach(img => {
     img.tabIndex = 0;
     img.setAttribute('role', 'button');
@@ -150,9 +173,15 @@ function initLightbox() {
   });
 
   // Close: X button, click backdrop, Esc key
+  // Navigate: arrow keys (only in gallery mode)
   closeBtn.addEventListener('click', close);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
-  document.addEventListener('keydown', (e) => { if (!lightbox.hidden && e.key === 'Escape') close(); });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); navigate(1); }
+  });
 }
 
 initLightbox();
