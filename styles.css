@@ -288,6 +288,10 @@ html, body {
   box-shadow: 0 2px 8px rgba(80,50,20,0.15);
   cursor: zoom-in;
 }
+.photo-figure img:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
 .photo-figure figcaption {
   font-family: 'Caveat', cursive;
   color: var(--accent);
@@ -323,6 +327,10 @@ html, body {
   filter: sepia(0.1) saturate(0.95) contrast(0.98);
   box-shadow: 0 2px 8px rgba(80,50,20,0.15);
   cursor: zoom-in;
+}
+.split-photos img:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
 }
 .split-photos figcaption {
   font-family: 'Caveat', cursive;
@@ -434,6 +442,10 @@ html, body {
 .gallery-grid img:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(80,50,20,0.2);
+}
+.gallery-grid img:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 @media (max-width: 900px) {
