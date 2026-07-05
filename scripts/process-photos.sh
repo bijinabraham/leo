@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Processes originals in ~/Downloads/Leo/ into web-optimized JPEGs in ../photos/
-# Produces: main (1400px), -sm (700px), plus -lg (2400px) for the 3 hero-tier photos.
+# Produces variants sized by longest dimension (aspect preserved):
+#   main = 1400px, -sm = 700px, -lg = 2400px (only for the 3 hero-tier photos).
 # Uses sips (built into macOS).
 
 set -euo pipefail
@@ -26,15 +27,15 @@ for src in "$SRC"/*.jpg "$SRC"/*.jpeg; do
   # Slugify: replace spaces with underscores in output filename
   out_base="${name// /_}"
 
-  # Main version: 1400px wide, quality 85
+  # Main version: 1400px longest dimension, quality 85
   out_main="$DEST/${out_base}.jpg"
   sips -Z 1400 -s format jpeg -s formatOptions 85 "$src" --out "$out_main" > /dev/null
 
-  # Mobile variant: 700px wide, quality 82
+  # Mobile variant: 700px longest dimension, quality 82
   out_sm="$DEST/${out_base}-sm.jpg"
   sips -Z 700 -s format jpeg -s formatOptions 82 "$src" --out "$out_sm" > /dev/null
 
-  # High-res variant for the 3 hero-tier photos (2400px, quality 88)
+  # High-res variant for the 3 hero-tier photos (2400px longest dimension, quality 88)
   for hi in "${HI_RES[@]}"; do
     if [ "$base" = "$hi" ]; then
       out_lg="$DEST/${out_base}-lg.jpg"
