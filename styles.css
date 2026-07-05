@@ -463,7 +463,7 @@ html, body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 50;
+  z-index: 600;
   overflow: hidden;
 }
 .petal {
