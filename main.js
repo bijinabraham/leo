@@ -60,3 +60,28 @@ function populateGallery() {
 }
 
 populateGallery();
+
+// -------- Falling petals --------
+function spawnPetals() {
+  const c = document.getElementById('petals');
+  if (!c) return;
+  const petalSVG = '<svg viewBox="0 0 24 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0 C 4 8, 4 24, 12 32 C 20 24, 20 8, 12 0"/></svg>';
+  const N = 24;
+  for (let i = 0; i < N; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.innerHTML = petalSVG;
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.animationDelay = (-Math.random() * 22) + 's';
+    p.style.animationDuration = (12 + Math.random() * 12) + 's';
+    p.style.setProperty('--drift', ((Math.random() * 120) - 60) + 'px');
+    p.style.setProperty('--spin', (360 + Math.random() * 540) + 'deg');
+    p.style.opacity = 0.32 + Math.random() * 0.4;
+    const scale = 0.6 + Math.random() * 0.9;
+    p.style.width = (14 * scale) + 'px';
+    p.style.height = (22 * scale) + 'px';
+    c.appendChild(p);
+  }
+}
+
+spawnPetals();
